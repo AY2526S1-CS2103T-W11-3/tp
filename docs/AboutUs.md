@@ -57,3 +57,13 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Coding
+
+### Anshul
+
+<img src="images/angmar2722.jpg" width="200px">
+
+[[github](http://github.com/angmar2722)]
+[[portfolio](team/angmar2722.md)]
+
+* Role: Developer
+* Responsibilities: Coding
