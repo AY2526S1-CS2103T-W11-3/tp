@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
  * Tags the people identified using their displayed index from the address
  * book with the given tags.
  */
-public class TagCommand extends Command{
+public class TagCommand extends Command {
     public static final String COMMAND_WORD = "tag";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -39,6 +39,9 @@ public class TagCommand extends Command{
     private final List<Index> targetIndexes;
     private final Set<Tag> tagsToAdd;
 
+    /**
+     * Creates an TagCommand to add the specified {@code Tag} (s) to the specified {@code Person} (s)
+     */
     public TagCommand(List<Index> targetIndexes, Set<Tag> tagsToAdd) {
         requireNonNull(targetIndexes);
         this.targetIndexes = targetIndexes;
@@ -52,7 +55,7 @@ public class TagCommand extends Command{
         List<Person> lastShownList = model.getFilteredPersonList();
 
         for (Index index : targetIndexes) {
-            if(index.getZeroBased()>= lastShownList.size()) {
+            if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
