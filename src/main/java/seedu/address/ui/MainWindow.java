@@ -16,6 +16,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.project.Project;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -34,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private ProjectView projectView;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -59,6 +61,7 @@ public class MainWindow extends UiPart<Stage> {
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.projectView = new ProjectView();
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -184,6 +187,11 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.hasProject()) {
+                Project project = commandResult.getProject();
+                projectView.showProject(project);
             }
 
             return commandResult;

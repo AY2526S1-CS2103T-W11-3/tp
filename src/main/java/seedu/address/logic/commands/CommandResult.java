@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Objects;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.project.Project;
 
 /**
  * Represents the result of a command execution.
@@ -19,6 +20,8 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
+    private Project project = null;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
@@ -26,6 +29,13 @@ public class CommandResult {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
+    }
+
+    public CommandResult(String feedbackToUser, Project project) {
+        this.feedbackToUser = requireNonNull(feedbackToUser);
+        this.showHelp = false;
+        this.exit = false;
+        this.project = project;
     }
 
     /**
@@ -46,6 +56,14 @@ public class CommandResult {
 
     public boolean isExit() {
         return exit;
+    }
+
+    public boolean hasProject() {
+        return !(this.project == null);
+    }
+
+    public Project getProject() {
+        return this.project;
     }
 
     @Override

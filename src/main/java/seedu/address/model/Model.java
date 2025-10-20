@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -122,4 +123,9 @@ public interface Model {
      * @throws NullPointerException if {@code project} is null.
      */
     void updateFilteredProjectList(Predicate<Project> predicate);
+
+    /**
+     * Looks for the project in the list of projects.
+     */
+    Project findProjectByName(String projectName);
 }
