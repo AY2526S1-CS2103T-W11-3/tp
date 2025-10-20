@@ -31,6 +31,10 @@ public class CommandResult {
         this.exit = exit;
     }
 
+    /**
+     * Constructs a {@code CommandResult} with the specified {@code Project}
+     * and {@code feedbackToUser} and other fields set to their default value
+     */
     public CommandResult(String feedbackToUser, Project project) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = false;

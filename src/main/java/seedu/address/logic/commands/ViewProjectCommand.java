@@ -1,17 +1,16 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.project.Project;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-
 /**
  * Displays the details of the project.
  */
-public class ViewProjectCommand extends Command{
+public class ViewProjectCommand extends Command {
 
     public static final String COMMAND_WORD = "view";
 
@@ -27,13 +26,16 @@ public class ViewProjectCommand extends Command{
 
     private final String projectName;
 
+    /**
+     * Constructs a {@code ViewProjectCommand} with the given project name.
+     */
     public ViewProjectCommand(String projectName) {
         requireNonNull(projectName);
         this.projectName = projectName;
     }
 
     @Override
-    public CommandResult execute (Model model) throws CommandException {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
         Project project = model.findProjectByName(projectName);
