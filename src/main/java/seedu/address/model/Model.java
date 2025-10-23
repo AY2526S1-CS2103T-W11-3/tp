@@ -126,5 +126,5 @@ public interface Model {
     /**
      * Looks for the project in the list of projects.
      */
-    Project findProjectByName(String projectName);
+    Project getProjectByName(String projectName);
 }
