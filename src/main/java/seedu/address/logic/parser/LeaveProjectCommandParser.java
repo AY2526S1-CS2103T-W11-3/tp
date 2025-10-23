@@ -26,6 +26,11 @@ public class LeaveProjectCommandParser implements Parser<LeaveProjectCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MEMBER);
 
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MEMBER)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LeaveProjectCommand.MESSAGE_USAGE));
+        }
+
         String projectName = argMultimap.getValue(PREFIX_NAME).get().trim();
         if (projectName.isEmpty()) {
             throw new ParseException("Missing project name.\n" + LeaveProjectCommand.MESSAGE_USAGE);
@@ -43,5 +48,13 @@ public class LeaveProjectCommandParser implements Parser<LeaveProjectCommand> {
         }
 
         return new LeaveProjectCommand(projectName, memberIndexes);
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
