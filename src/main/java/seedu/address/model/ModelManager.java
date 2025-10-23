@@ -139,7 +139,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Project findProjectByName(String projectName) {
+    public Project getProjectByName(String projectName) {
         requireNonNull(projectName);
         return addressBook.getProjectList().stream()
                 .filter(p -> p.getName().equalsIgnoreCase(projectName))
