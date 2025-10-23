@@ -110,7 +110,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public Project findProjectByName(String projectName) {
+        public Project getProjectByName(String projectName) {
             throw new AssertionError("This method should not be called.");
         }
 
