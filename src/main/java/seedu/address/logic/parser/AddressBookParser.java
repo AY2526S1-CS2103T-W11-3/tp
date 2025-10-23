@@ -18,8 +18,10 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.JoinProjectCommand;
 import seedu.address.logic.commands.LeaveProjectCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SortPersonsCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -84,11 +86,17 @@ public class AddressBookParser {
         case TagCommand.COMMAND_WORD:
             return new TagCommandParser().parse(arguments);
 
+        case SortPersonsCommand.COMMAND_WORD:
+            return new SortPersonsCommandParser().parse(arguments);
+
         case AddProjectCommand.COMMAND_WORD:
             return new AddProjectCommandParser().parse(arguments);
 
         case LeaveProjectCommand.COMMAND_WORD:
             return new LeaveProjectCommandParser().parse(arguments);
+
+        case JoinProjectCommand.COMMAND_WORD:
+            return new JoinProjectCommandParser().parse(arguments);
 
         case DeleteProjectCommand.COMMAND_WORD:
             return new DeleteProjectCommandParser().parse(arguments);
