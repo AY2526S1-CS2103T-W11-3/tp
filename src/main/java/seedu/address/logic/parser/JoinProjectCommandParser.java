@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.JoinProjectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -30,7 +31,7 @@ public class JoinProjectCommandParser implements Parser<JoinProjectCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MEMBER)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, JoinProjectCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, JoinProjectCommand.MESSAGE_USAGE));
         }
 
         String projectName = argMultimap.getValue(PREFIX_NAME).get().trim();
