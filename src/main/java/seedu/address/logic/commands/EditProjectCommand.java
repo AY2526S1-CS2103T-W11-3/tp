@@ -59,7 +59,7 @@ public class EditProjectCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Project projectToEdit = model.findProjectByName(oldName);
+        Project projectToEdit = model.getProjectByName(oldName);
         if (projectToEdit == null) {
             throw new CommandException(String.format(MESSAGE_PROJECT_NOT_FOUND, oldName));
         }
