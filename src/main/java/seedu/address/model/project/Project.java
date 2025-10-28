@@ -93,6 +93,13 @@ public class Project {
     }
 
     /**
+     * Checks if member is present in project.
+     */
+    public boolean hasMember(Person person) {
+        return members.contains(person);
+    }
+
+    /**
      * Removes a member from this project.
      *
      * @param person the person to remove

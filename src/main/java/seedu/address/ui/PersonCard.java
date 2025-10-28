@@ -4,12 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -68,30 +64,14 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane projects; // May be null
 
     /**
-     * Creates a {@code PersonCard} with the given {@code Person} and display index.
-     * This is the original constructor for backward compatibility.
-     *
-     * @param person         The person to display. Must not be null.
-     * @param displayedIndex The 1-based index to display. Must be positive.
-     */
-    public PersonCard(Person person, int displayedIndex) {
-        this(person, displayedIndex, null, null);
-    }
-
-    /**
      * Creates a {@code PersonCard} with the given {@code Person}, display index,
      * list of all projects, and callback for project clicks.
      *
      * @param person         The person to display. Must not be null.
+     * @param projects       The projects the person is part of.
      * @param displayedIndex The 1-based index to display. Must be positive.
-     * @param allProjects    The list of all projects to check for membership. Can
-     *                       be null.
-     * @param onProjectClick Callback to execute when a project is clicked. Can be
-     *                       null.
      */
-    public PersonCard(Person person, int displayedIndex,
-            ObservableList<Project> allProjects,
-            Consumer<Project> onProjectClick) {
+    public PersonCard(Person person, List<Project> projects, int displayedIndex) {
         super(FXML);
         requireNonNull(person, "Person cannot be null");
         assert displayedIndex > 0 : "Displayed index must be positive";
@@ -122,8 +102,8 @@ public class PersonCard extends UiPart<Region> {
         displayTags();
 
         // Display projects only if both projects FlowPane exists and data is provided
-        if (projects != null && allProjects != null && onProjectClick != null) {
-            displayProjects(allProjects, onProjectClick);
+        if (this.projects != null && projects != null) {
+            displayProjects(projects);
         }
     }
 
@@ -184,40 +164,19 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Displays projects that the selected person is a member of as clickable
-     * hyperlinks.
-     * Filters the project list to find projects containing this person,
-     * then creates a hyperlink for each project that triggers the callback when
-     * clicked.
-     *
-     * @param allProjects    The list of all projects to filter. Must not be null.
-     * @param onProjectClick The callback to execute when a project is clicked. Must
-     *                       not be null.
+     * Displays the person's projects as labels (styled like tags).
      */
-    private void displayProjects(ObservableList<Project> allProjects, Consumer<Project> onProjectClick) {
-        requireNonNull(allProjects, "Project list cannot be null");
-        requireNonNull(onProjectClick, "Project click callback cannot be null");
-
-        // projects FlowPane should exist if this method is called
-        if (projects == null) {
+    private void displayProjects(List<Project> personProjects) {
+        if (projects == null || personProjects == null) {
             return;
         }
 
-        // Filter projects to find ones where this person is a member
-        List<Project> personProjects = allProjects.stream()
-                .filter(project -> project != null && project.getMembers() != null)
-                .filter(project -> project.getMembers().contains(person))
-                .collect(Collectors.toList());
-
-        // Create clickable hyperlinks for each project
-        for (Project project : personProjects) {
-            Hyperlink projectLink = new Hyperlink(project.getName());
-            projectLink.getStyleClass().add("project-link");
-
-            // Set click handler to trigger callback with the project
-            projectLink.setOnAction(event -> onProjectClick.accept(project));
-
-            projects.getChildren().add(projectLink);
-        }
+        personProjects.stream()
+                .sorted(Comparator.comparing(project -> project.getName()))
+                .forEach(project -> {
+                    Label projectLabel = new Label(project.getName());
+                    projectLabel.getStyleClass().add("project-tag");
+                    projects.getChildren().add(projectLabel);
+                });
     }
 }

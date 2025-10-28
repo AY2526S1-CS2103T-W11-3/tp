@@ -390,7 +390,16 @@
     -fx-font-size: 11;
 }
 
-/* Project list styling */
-.project-list-view .list-cell {
-    -fx-text-fill: white !important;
+.project-tag {
+    -fx-text-fill: white;
+    -fx-background-color: #2E5968;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+.project-text {
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI Semibold";
 }

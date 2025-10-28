@@ -16,6 +16,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.project.Project;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -34,7 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
-    private ProjectListPanel projectListPanel;
+    private ProjectView projectView;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -46,13 +47,13 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane projectPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
-
-    @FXML
-    private StackPane projectPanelPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -112,20 +113,13 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Fills up all the placeholders of this window.
-     * Creates and initializes all UI components.
-     * Person selection triggers project display in the right panel.
      */
     void fillInnerParts() {
-        // Create ProjectListPanel first
-        ProjectListPanel projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
-        projectPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
-
-        // Create PersonListPanel with selection callback
-        personListPanel = new PersonListPanel(
-                logic.getFilteredPersonList(),
-                projectListPanel::showProjectsForPerson
-        );
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.getFilteredProjectList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        projectView = new ProjectView();
+        projectPanelPlaceholder.getChildren().add(projectView.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -198,6 +192,11 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.hasProject()) {
+                Project project = commandResult.getProject();
+                projectView.showProject(project);
             }
 
             return commandResult;
