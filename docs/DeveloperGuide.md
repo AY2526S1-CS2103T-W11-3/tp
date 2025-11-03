@@ -664,11 +664,11 @@ pdetails n/Web Series Pilot
 ```
 **Expected:** Right panel shows deadline, priority, and members for exactly "Web Series Pilot".
 
-**Case mismatch should fail (per UG for `pdetails`)**
+**Different case for project name should work for project details**
 ```text
 pdetails n/web series pilot
 ```
-**Expected:** Error (exact case required).
+**Expected:** Right panel shows deadline, priority, and members for the project as above.
 
 ---
 
@@ -859,7 +859,7 @@ exit
 ## Notes on edge cases for exploratory testing
 
 - **Case sensitivity**:
-    - `pdetails` requires **exact case**; try mismatched case to confirm rejection.
+    - `pdetails` matches **case-insensitively**; try mixed case to confirm acceptance.
     - `pdelete` matches **case-insensitively**; try mixed case to confirm acceptance.
     - `padd`/`pedit` name clashes are enforced **ignoring case** per UG notes in those sections; try creating/renaming with only case differences.
 - **Indices**: Always operate on the **currently displayed** contact list. Use `list` before testing index-based commands.
